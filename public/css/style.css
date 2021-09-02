@@ -1,0 +1,56 @@
+.table > thead > tr > * {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table > tbody > tr > * {
+  vertical-align: middle;
+  text-align: left;
+}
+h2 {
+  text-align: center;
+  color: #009879;
+}
+
+/* css HOME landing page */
+#hero {
+  background-image: linear-gradient(
+      rgba(12, 12, 12, 0.9),
+      rgba(15, 15, 15, 0.9)
+    ),
+    url(/img/slider1.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+#hero .container {
+  height: 86vh;
+}
+
+.copyright {
+  height: 8vh;
+}
+
+/* end of landing page */
+
+/* side responsiv */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
