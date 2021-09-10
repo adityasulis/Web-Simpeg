@@ -1,20 +1,23 @@
 ## Web-Simpeg
-# Sistem Informasi Kepegawaian.
+Sistem Informasi Kepegawaian.
 
 # Fitur :
 
-Multi Login Akses ( User, super users, super admin)
-Menampilkan data individu, dan semua pegawai(admin)
-Report per-user menggunakan MPDF
-Report semua data menggunakan Excel
-Edit data user melalaui admin (menyusul)
-Edit password users (menyusul)
-Tambah data baru
+Multi Login Akses ( User, super users, super admin).
+Menampilkan data individu, dan semua pegawai(admin).
+Report per-user menggunakan MPDF.
+Report semua data menggunakan Excel.
+Edit data user melalaui admin (menyusul).
+Edit password users (menyusul).
+Tambah data baru.
 
-# Framework : CI4, Bootstrap 5
+# Framework 
+CI4, Bootstrap 5
 
-# Library : Myth/Auth, Faker, PHPSpreadsheet, MPDF
+# Library 
+Myth/Auth, Faker, PHPSpreadsheet, MPDF
 
+--------------------------------------
 
 # CodeIgniter 4 Application Starter
 
