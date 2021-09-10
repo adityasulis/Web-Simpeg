@@ -28,7 +28,7 @@
             <div class="card">
                 <div class="img">
                     <img class="img-fluid rounded top" src="<?= base_url('/img/slider1.jpg'); ?>" alt="bg">
-                    <img style="max-width:50%;height: auto;" src="<?= base_url('/img/' . user()->user_image); ?>" class="img-fluid rounded-circle" alt=" <?= user()->username; ?>">
+                    <img style="max-width:50%;height: auto;" src="<?= base_url('/img/fotoprofile/' . user()->user_image); ?>" class="img-fluid rounded-circle" alt=" <?= user()->username; ?>">
                 </div>
                 <div class="card-body">
                     <div class="card-tittle">

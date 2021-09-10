@@ -41,4 +41,11 @@ class daftarModel extends Model
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getRow();
     }
+
+    public function getDaftarExcel()
+    {
+        return $this->db->table('identitaspeg')
+            ->orderBy('namapeg')
+            ->get()->getResult();
+    }
 }

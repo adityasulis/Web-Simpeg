@@ -50,7 +50,7 @@
     <h2 style="text-align: center;margin-bottom:30px;"><?= $title; ?></h2>
     <div class="row align-items-start">
         <div class="card" style="width: 15rem;">
-            <img src="<?= base_url('/img/' . user()->user_image); ?>" class="foto-user" alt="profile">
+            <img src="<?= base_url('/img/fotoprofile/' . user()->user_image); ?>" class="foto-user" alt="profile">
             <div class="card-body text-center">
                 <h6 style="text-transform: uppercase;font-family: Verdana, Geneva, Tahoma, sans-serif;"><?= user()->fullname; ?></h6>
                 <p class="card-text text-primary"><?= $identitas->nik; ?></p>
@@ -140,7 +140,7 @@
                             <table class="pend table table-bordered align-middle table-hover" id="table_pendidikan">
                                 <thead>
                                     <tr>
-                                        <th colspan="4">RIWAYAT PENDIDIKAN</th>
+                                        <th colspan="3">RIWAYAT PENDIDIKAN</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">Pendidikan Formal</th>
@@ -218,7 +218,7 @@
                             <table class="pang table table-bordered table-hover" id="table_pangkat">
                                 <thead>
                                     <tr>
-                                        <th colspan="5">RIWAYAT KEPANGKATAN</th>
+                                        <th colspan="3">RIWAYAT KEPANGKATAN</th>
                                     </tr>
                                     <tr class="tbhead">
                                         <th>No</th>

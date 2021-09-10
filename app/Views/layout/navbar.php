@@ -10,7 +10,7 @@
                 </li>
             <?php else : ?>
                 <li class="nav-item">
-                    <a href="/login" class="btn btn-outline-light btn-sm" role="button" aria-disabled="true">
+                    <a href="<?= base_url('/login'); ?>" class="btn btn-outline-light btn-sm" role="button" aria-disabled="true">
                         <i class="fas fa-fw fa-sign-in-alt"></i> Login</a>
                 </li>
             <?php endif ?>

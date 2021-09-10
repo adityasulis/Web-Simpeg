@@ -10,7 +10,7 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4 mt-5 ml-2">
-                        <img src="<?= base_url('/img/' . $user->user_image); ?>" class="img-fluid rounded-start" alt="<?= $user->username; ?>">
+                        <img src="<?= base_url('/img/fotoprofile/' . $user->user_image); ?>" class="img-fluid rounded-start" alt="<?= $user->username; ?>">
                     </div>
                     <div class="col-md-7">
                         <div class="card-body">

@@ -60,7 +60,7 @@
                         <i class="fas fa-fw fa-user-plus"></i>
                         Tambah Pegawai
                     </a>
-                    <a class="collapse-item" href="<?= base_url('ExportExcel/cetak'); ?>">
+                    <a class="collapse-item" href="<?= base_url('Cetak/excel'); ?>">
                         <i class="fas fa-file-excel"></i>
                         Export Excel
                     </a>

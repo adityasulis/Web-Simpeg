@@ -248,4 +248,37 @@ class Cetak extends BaseController
 
         return view('Cetak/cetakDataUser');
     }
+
+    public function excel($daftar)
+    {
+        $data = [
+            'identitas' => $this->daftarModel->getDaftarExcel(),
+            // 'sekolah' => $this->pendidikanModel->getExcelPendidikan()
+        ];
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('pendidikan');
+        $builder->select('nama_pendidikan,  thn_lulus');
+        $builder->join('ambil_pendidikan', 'pendidikan.id_pend=ambil_pendidikan.id_pend');
+        $builder->join('identitaspeg', 'identitaspeg.id_identitas=ambil_pendidikan.id_identitas');
+        $builder->where('identitaspeg.namapeg', $daftar->id_identitas);
+        $query = $builder->get();
+        $data['pend'] = $query->getRow();
+
+        if (empty($data['pend'])) {
+            echo ('-');
+        }
+
+        return view('daftarPeg/v-excel', $data);
+    }
+
+    public function excelprint()
+    {
+        $data = [
+            'identitas' => $this->daftarModel->getDaftar(),
+            'sekolah' => $this->pendidikanModel->getExcelPendidikan()
+        ];
+
+        return view('daftarPeg/excel', $data);
+    }
 }
