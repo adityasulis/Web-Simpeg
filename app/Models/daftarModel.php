@@ -8,7 +8,7 @@ class daftarModel extends Model
 {
     protected $table = 'identitaspeg';
     // protected $useTimestamps = 'false';
-    protected $allowedFields = ['namapeg', 'nik', 'jabatan_peg', 'tmplahir', 'tgllahir', 'alamat', 'Statuspeg', 'statuskeluarga'];
+    protected $allowedFields = ['namapeg', 'nik', 'tmt', 'jabatan_peg', 'tmplahir', 'tgllahir', 'alamat', 'Statuspeg', 'statuskeluarga'];
 
     public function getDaftar($id = false)
     {
@@ -27,7 +27,7 @@ class daftarModel extends Model
     public function getDashboarddata()
     {
         return $this->db->table('identitaspeg')
-            ->select('identitaspeg.id_identitas, nik, namapeg, jabatan_peg, tmplahir,tgllahir,alamat,Statuspeg,statuskeluarga')
+            ->select('identitaspeg.id_identitas, nik,tmt, namapeg, jabatan_peg, tmplahir,tgllahir,alamat,Statuspeg,statuskeluarga')
             ->join('ambil_users', 'identitaspeg.id_identitas=ambil_users.id_identitas')
             ->join('users', 'users.id = ambil_users.id')
             ->where('users.id', user()->id)
@@ -37,7 +37,7 @@ class daftarModel extends Model
     public function getCetakData($id)
     {
         return $this->db->table('identitaspeg')
-            ->select('id_identitas, nik, namapeg, jabatan_peg, tmplahir,tgllahir,alamat,Statuspeg,statuskeluarga')
+            ->select('id_identitas, nik, tmt, namapeg, jabatan_peg, tmplahir,tgllahir,alamat,Statuspeg,statuskeluarga')
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getRow();
     }

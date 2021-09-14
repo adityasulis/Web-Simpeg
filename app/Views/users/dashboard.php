@@ -108,6 +108,10 @@
                                         <td><?= $identitas->nik; ?></td>
                                     </tr>
                                     <tr>
+                                        <th>TMT</th>
+                                        <td><?= $identitas->tmt; ?></td>
+                                    </tr>
+                                    <tr>
                                         <th>Jabatan</th>
                                         <td><?= $identitas->jabatan_peg; ?></td>
                                     </tr>

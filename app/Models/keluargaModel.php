@@ -37,4 +37,25 @@ class keluargaModel extends Model
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getResult();
     }
+
+    public function getCetakPasangan($id)
+    {
+        return $this->db->table('data_keluarga')
+            ->select('nama_kel, tgllahir_kel, status_kel')
+            ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
+            ->where('data_keluarga.keterangan', 'Pasangan')
+            ->where('identitaspeg.id_identitas', $id)
+            ->get()->getResult();
+    }
+
+
+    public function getCetakAnak($id)
+    {
+        return $this->db->table('data_keluarga')
+            ->select('nama_kel, tgllahir_kel, status_kel')
+            ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
+            ->where('data_keluarga.status_kel', 'Anak')
+            ->where('identitaspeg.id_identitas', $id)
+            ->get()->getResult();
+    }
 }

@@ -43,13 +43,13 @@ class pendidikanModel extends Model
             ->get()->getResult();
     }
 
-    public function getExcelPendidikan()
+    public function getExcelPendidikan($id)
     {
         return $this->db->table('pendidikan')
             ->select('nama_pendidikan,  thn_lulus')
             ->join('ambil_pendidikan', 'pendidikan.id_pend=ambil_pendidikan.id_pend')
             ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_pendidikan.id_identitas')
-            ->where('identitaspeg.id_identitas=1')
+            ->where('identitaspeg.id_identitas', $id)
             ->get()->getResultArray();
     }
 }

@@ -52,6 +52,10 @@ use App\Controllers\Cetak;
                                         <td><?= $daftar['nik']; ?></td>
                                     </tr>
                                     <tr>
+                                        <th>TMT</th>
+                                        <td><?= $daftar['tmt']; ?></td>
+                                    </tr>
+                                    <tr>
                                         <th>Jabatan</th>
                                         <td><?= $daftar['jabatan_peg']; ?></td>
                                     </tr>
