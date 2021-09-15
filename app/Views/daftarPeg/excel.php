@@ -89,12 +89,12 @@ $this->pangkatModel = new pangkatModel();
                     </td>
                     <td>
                         <?php foreach ($fam as $f) : ?>
-                            <?= $f->nama_kel; ?> / <?= $f->tgllahir_kel; ?><br>
+                            <?= $f->nama_kel; ?> / <?= $f->tgllahir_kel; ?> / <?= $f->tertanggung; ?><br>
                         <?php endforeach ?>
                     </td>
                     <td>
                         <?php foreach ($famkid as $fk) : ?>
-                            <?= $fk->nama_kel; ?> / <?= $fk->tgllahir_kel; ?> <br>
+                            <?= $fk->nama_kel; ?> / <?= $fk->tgllahir_kel; ?> / <?= $fk->tertanggung; ?> <br>
                         <?php endforeach ?>
                     </td>
                     <td>

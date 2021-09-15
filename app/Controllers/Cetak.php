@@ -245,7 +245,6 @@ class Cetak extends BaseController
         $ekstensi = ".pdf";
         $mpdf->Output($namafile . $ekstensi, 'I');
 
-
         return view('Cetak/cetakDataUser');
     }
 
@@ -254,7 +253,6 @@ class Cetak extends BaseController
 
         $data = [
             'identitas' => $this->daftarModel->getDaftarExcel()
-
         ];
 
         return view('daftarPeg/v-excel', $data);
@@ -264,7 +262,6 @@ class Cetak extends BaseController
     {
         $data = [
             'identitas' => $this->daftarModel->getDaftarExcel()
-
         ];
 
         return view('daftarPeg/excel', $data);
