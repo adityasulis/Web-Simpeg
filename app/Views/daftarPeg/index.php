@@ -42,11 +42,7 @@
                             <td style="text-align: center;"><?= $d['Statuspeg']; ?></td>
                             <td style="text-align: center;">
                                 <a href="/daftarPeg/<?= $d['id_identitas']; ?>" method="POST" class="btn btn-info">Detail</a>
-                                <form action="/daftarPeg/<?= $d['id_identitas']; ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin?');">Hapus</button>
-                                </form>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>

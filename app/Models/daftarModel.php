@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use PharIo\Version\OrVersionConstraintGroup;
 
 class daftarModel extends Model
 {
@@ -20,7 +21,6 @@ class daftarModel extends Model
 
     public function search($keyword)
     {
-
         return $this->table('identitaspeg')->like('namapeg', $keyword)->orLike('jabatan_peg', $keyword);
     }
 

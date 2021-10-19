@@ -110,7 +110,12 @@ class DaftarPeg extends BaseController
 
     public function delete($id)
     {
-        $this->daftarModel->delete($id);
+        // $this->daftarModel->delete($id);
+        $db = \Config\Database::connect();
+        $builder = $db->table('identitaspeg');
+        $builder->delete(['id_identitas' => $id]);
+        $builder->where('id_identitas', $id);
+        $builder->delete();
         session()->setFlashdata('pesan', 'Data Berhasil Dihapus!!');
         return redirect()->to('/daftarPeg');
     }

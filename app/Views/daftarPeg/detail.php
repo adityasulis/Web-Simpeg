@@ -1,7 +1,3 @@
-<?php
-
-use App\Controllers\Cetak;
-?>
 <?= $this->extend('templates/index'); ?>
 <?= $this->section('page-content-users'); ?>
 <style>
@@ -26,7 +22,14 @@ use App\Controllers\Cetak;
                     <button type="submit" class="btn btn-outline-info">
                         <i class="fas fa-fw fa-print"></i></button>
                 </form>
-                <a href="<?= base_url('DaftarPeg/index'); ?>" class="btn btn-outline-info ">
+                <form action="/daftarPeg/<?= $daftar['id_identitas']; ?>" method="POST" class="d-inline">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah Anda Yakin?');">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+                <a href="<?= base_url('DaftarPeg/index'); ?>" class="btn btn-outline-secondary ">
                     <i class="fas fa-fw fa-angle-double-left"></i>
                 </a>
             </li>
