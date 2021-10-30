@@ -2,6 +2,18 @@
 <?= $this->section('page-content-users'); ?>
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
+            <?php if (session()->getFlashdata('pesan')) : ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= session()->getFlashdata('pesan'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="row">
         <div class="justify-content-center align-items-center">
             <h2 class="my-3">Tambah Data Pegawai</h2>
 
@@ -13,14 +25,14 @@
                 </div>
                 <div class="col-md-6 mt-3">
                     <label for="nik" class="form-label">NIK</label>
-                    <input type="number" class="form-control <?= ($validation->hasError('nik')) ? 'is-invalid' : ''; ?>" id="nik" name="nik" required>
+                    <input type="number" class="form-control <?= ($validation->hasError('nik')) ? 'is-invalid' : ''; ?>" id="nik" name="nik" value="<?= old('nik') ?>" required>
                     <div class="invalid-feedback">
                         <?= $validation->getError('nik'); ?>
                     </div>
                 </div>
                 <div class="col-6 mt-3">
                     <label for="alamat" class="form-label">Alamat</label>
-                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Wonogiri" required>
+                    <input type="text" class="form-control" id="alamat" name="alamat" required>
                 </div>
                 <div class="col-6 mt-3">
                     <label for="jabatan" class="form-label">Jabatan</label>
@@ -30,21 +42,21 @@
                     <label for="tmplahir" class="form-label">Tempat Lahir</label>
                     <input type="text" class="form-control" style="text-transform: uppercase;" id="tmplahir" name="tmplahir" required></input>
                 </div>
-                <div class="col-md-4 mt-3">
+                <div class="col-md-6 mt-3">
                     <label for="tgllahir" class="form-label">Tanggal Lahir</label>
                     <input type="date" id="tgllahir" class="form-control" id="tgllahir" name="tgllahir" required></ipnut>
                 </div>
                 <div class="col-md-6 mt-3">
                     <label for="statuspegawai" class="form-label">Status Pegawai </label>
-                    <select id="statuspegawai" class="form-select" name="statuspegawai" required>
+                    <select id="statuspegawai" class="form-control" name="statuspegawai" required>
                         <option selected></option>
                         <option value="Pegawai Tetap">Pegawai Tetap</option>
                         <option value="Calon Pegawai">Calon Pegawai</option>
                     </select>
                 </div>
-                <div class="col-md-4 mt-3">
+                <div class="col-md-6 mt-3">
                     <label for="statusmenikah" class="form-label">Status Menikah </label>
-                    <select id="statusmenikah" name="statusmenikah" class="form-select" required>
+                    <select id="statusmenikah" name="statusmenikah" class="form-control" required>
                         <option selected></option>
                         <option value="Menikah">Menikah</option>
                         <option value="Belum Menikah">Belum Menikah</option>

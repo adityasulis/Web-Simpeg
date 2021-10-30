@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 class jabatanModel extends Model
 {
     protected $table = 'ambil_jabatan';
+    protected $primaryKey = 'id_ambil_jabatan';
+    protected $allowedFields = ['id_identitas', 'id_jabatan', 'periode_mulai', 'periode_selesai', 'unit_kerja'];
     protected $id = 'id_identitas';
 
     public function getJabatan($id)
@@ -16,6 +18,16 @@ class jabatanModel extends Model
             ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_jabatan.id_identitas')
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getResultArray();
+    }
+
+    public function getJabatanDropdown()
+    {
+        return $this->db->table('jabatan')->get()->getResultArray();
+    }
+
+    public function getJabatanExist($where)
+    {
+        return $this->db->table($this->table)->where($where)->get()->getResultArray();
     }
 
     public function getDashboarjab()

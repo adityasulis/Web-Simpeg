@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 class keluargaModel extends Model
 {
     protected $table = 'data_keluarga';
+    protected $primaryKey = 'id_data_kel';
+    protected $allowedFields = ['id_identitas', 'nama_kel', 'tgllahir_kel', 'status_kel', 'keterangan', 'tertanggung'];
     protected $id = 'id_identitas';
 
     public function getKeluarga($id)

@@ -39,6 +39,7 @@ $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:superadmin']);
 $routes->get('/admin/(::num)', 'Admin::detail/$1', ['filter' => 'role:superadmin']);
 
 $routes->get('daftarPeg/create', 'DaftarPeg::create');
+$routes->post('daftarPeg/save', 'DaftarPeg::save');
 $routes->get('daftarPeg/edit/(:segment)', 'DaftarPeg::edit/$1');
 $routes->delete('daftarPeg/(:num)', 'DaftarPeg::delete/$1');
 $routes->get('/daftarPeg/(:any)', 'DaftarPeg::detail/$1');

@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class daftarModel extends Model
 {
     protected $table = 'identitaspeg';
+    protected $primaryKey = 'id_identitas';
     // protected $useTimestamps = 'false';
     protected $allowedFields = ['namapeg', 'nik', 'tmt', 'jabatan_peg', 'tmplahir', 'tgllahir', 'alamat', 'Statuspeg', 'statuskeluarga'];
 

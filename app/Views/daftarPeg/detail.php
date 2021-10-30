@@ -23,8 +23,15 @@ use App\Controllers\Cetak;
                 <form action="/Cetak/cetakDataUser/<?= $daftar['id_identitas']; ?>" method="POST" class="d-inline" target="_blank">
                     <?= csrf_field(); ?>
                     <input type="hidden" name="_method" value="cetakadmin">
-                    <button type="submit" class="btn btn-outline-info">
+                    <button type="submit" class="btn btn-outline-primary">
                         <i class="fas fa-fw fa-print"></i></button>
+                </form>
+                <form action="/daftarPeg/<?= $daftar['id_identitas']; ?>" method="POST" class="d-inline">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah Anda Yakin?');">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </form>
                 <a href="<?= base_url('DaftarPeg/index'); ?>" class="btn btn-outline-info ">
                     <i class="fas fa-fw fa-angle-double-left"></i>
@@ -32,8 +39,26 @@ use App\Controllers\Cetak;
             </li>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <?php if (session()->getFlashdata('pesan_salah')) : ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?= session()->getFlashdata('pesan_salah'); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php elseif (session()->getFlashdata('pesan_benar')) : ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?= session()->getFlashdata('pesan_benar'); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col md-4 mt-3">
-
                 <!-- tabel PROFILE pegawai dimulai -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -81,6 +106,14 @@ use App\Controllers\Cetak;
                                     </tr>
                                 </tbody>
                             </table>
+                            <?php if (count($user_linked) > 0) : ?>
+                                <button type="button" class="btn-sm btn-warning" data-toggle="modal" data-target="#editUsernamePassword" style="float: left;">
+                                    Ubah Username dan Password
+                                </button>
+                            <?php endif; ?>
+                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#editData" style="float: right;">
+                            Edit
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -92,13 +125,17 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Data Keluarga</h6>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahKeluarga" style="float: right;margin-bottom: 10px;">
+                            Tambah
+                        </button>
+                <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
                                         <th>Tanggal Lahir</th>
                                         <th>Status Keluarga</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -107,6 +144,14 @@ use App\Controllers\Cetak;
                                             <td><?= $k['nama_kel']; ?></td>
                                             <td><?= $k['tgllahir_kel']; ?></td>
                                             <td><?= $k['status_kel']; ?></td>
+                                            <td>
+                                                <a href="/DaftarPeg/deleteKeluarga/<?= $k['id_data_kel']; ?>/<?= $daftar['id_identitas']; ?>" class="btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash-alt"></i></a>
+
+                                                <a href="" class="btn-sm btn-outline-info">
+                                                <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -121,6 +166,9 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Pendidikan Non Formal</h6>
                     </div>
                     <div class="card-body">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPendidikanNonFormal" style="float: right;margin-bottom: 10px;">
+                            Tambah
+                        </button>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -128,6 +176,7 @@ use App\Controllers\Cetak;
                                         <th>No</th>
                                         <th>Nama Pendidikan</th>
                                         <th>Tahun Lulus</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -137,6 +186,10 @@ use App\Controllers\Cetak;
                                             <td><?= $non++; ?></td>
                                             <td><?= $n['nama_pend_non']; ?></td>
                                             <td><?= $n['thn_lulus_non']; ?></td>
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#Modaldelnonformal" class="btn-sm  btn-outline-danger"> 
+                                                <i class="fas fa-trash-alt"> </i></a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -157,6 +210,9 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Pendidikan</h6>
                     </div>
                     <div class="card-body">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPendidikan" style="float: right;margin-bottom: 10px;">
+                            Tambah
+                        </button>
                         <div class="table-responsive">
                             <table class="table table-bordered table-sm table-hover" id="dataTable" width="95%" cellspacing="0">
                                 <thead>
@@ -164,6 +220,7 @@ use App\Controllers\Cetak;
                                         <th>No</th>
                                         <th>Pendidikan</th>
                                         <th>Tahun Lulus</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -173,6 +230,12 @@ use App\Controllers\Cetak;
                                             <td><?= $pe++; ?></td>
                                             <td style="text-align: left;"><?= $p['nama_pendidikan']; ?></td>
                                             <td><?= $p['thn_lulus']; ?></td>
+                                            <td>
+                                                <a href="/DaftarPeg/deletePendidikan/<?= $p['id_ambil_pend']; ?>/<?= $daftar['id_identitas']; ?>" class="btn btn-danger">Hapus</a>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPendidikan" style="float: right;">
+                                                    Edit
+                                                </button>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -188,6 +251,9 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Kepangkatan</h6>
                     </div>
                     <div class="card-body">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPangkat" style="float: right;margin-bottom: 10px;">
+                            Tambah
+                        </button>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -195,6 +261,7 @@ use App\Controllers\Cetak;
                                         <th>No</th>
                                         <th>Pangkat</th>
                                         <th>Tahun Perolehan</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -205,6 +272,9 @@ use App\Controllers\Cetak;
                                             <td><?= $pa++; ?></td>
                                             <td><?= $g['nama_pangkat']; ?></td>
                                             <td><?= $g['thn_perolehan']; ?></td>
+                                            <td>
+                                                <a href="/DaftarPeg/deletePangkat/<?= $g['id_ambil_pangkat']; ?>/<?= $daftar['id_identitas']; ?>" class="btn btn-danger">Hapus</a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -220,6 +290,9 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Jabatan</h6>
                     </div>
                     <div class="card-body">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahJabatan" style="float: right;margin-bottom: 10px;">
+                            Tambah
+                        </button>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="110%" cellspacing="0">
                                 <thead>
@@ -228,6 +301,7 @@ use App\Controllers\Cetak;
                                         <th>Periode Mulai</th>
                                         <th>Periode Selesai</th>
                                         <th>Unit Kerja</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -239,6 +313,9 @@ use App\Controllers\Cetak;
                                             <td><?= $j['periode_mulai']; ?></td>
                                             <td><?= $j['periode_selesai']; ?></td>
                                             <td><?= $j['unit_kerja']; ?></td>
+                                            <td>
+                                                <a href="/DaftarPeg/deleteJabatan/<?= $j['id_ambil_jabatan']; ?>/<?= $daftar['id_identitas']; ?>" class="btn btn-danger">Hapus</a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -255,4 +332,398 @@ use App\Controllers\Cetak;
 
     </div>
 </div>
+
+<!-- MODAL -->
+<div class="modal fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Pegawai</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/daftarPeg/updatePegawai" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="username" class="form-label">Nama Pegawai</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="text" class="form-control" id="namapeg" name="namapeg" value="<?= $daftar['namapeg'] ?>" required autofocus>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="nik" class="form-label">NIK</label>
+                                <input type="hidden" class="form-control" id="nik_asli" name="nik_asli" value="<?= $daftar['nik'] ?>" required>
+                                <input type="number" class="form-control" id="nik" name="nik" value="<?= $daftar['nik'] ?>" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $daftar['alamat'] ?>" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="jabatan_peg" class="form-label">Jabatan</label>
+                                <input type="text" class="form-control" id="jabatan_peg" name="jabatan_peg" value="<?= $daftar['jabatan_peg'] ?>" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="tmplahir" class="form-label">Tempat Lahir</label>
+                                <input type="text" class="form-control" style="text-transform: uppercase;" id="tmplahir" value="<?= $daftar['tmplahir'] ?>" name="tmplahir" required></input>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="tgllahir" class="form-label">Tanggal Lahir</label>
+                                <input type="date" id="tgllahir" class="form-control" id="tgllahir" name="tgllahir" value="<?= $daftar['tgllahir'] ?>" required></ipnut>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="Statuspeg" class="form-label">Status Pegawai </label>
+                                <select id="Statuspeg" class="form-control" name="Statuspeg" required>
+                                    <option selected></option>
+                                    <option value="Pegawai Tetap" <?= ($daftar['Statuspeg'] == "Pegawai Tetap") ? "selected" : "" ?>>Pegawai Tetap</option>
+                                    <option value="Calon Pegawai" <?= ($daftar['Statuspeg'] == "Calon Pegawai") ? "selected" : "" ?>>Calon Pegawai</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="statuskeluarga" class="form-label">Status Menikah </label>
+                                <select id="statuskeluarga" name="statuskeluarga" class="form-control" required>
+                                    <option selected></option>
+                                    <option value="Menikah" <?= ($daftar['statuskeluarga'] == "Menikah") ? "selected" : "" ?>>Menikah</option>
+                                    <option value="Belum Menikah" <?= ($daftar['statuskeluarga'] == "Belum Menikah") ? "selected" : "" ?>>Belum Menikah</option>
+                                    <option value="Cerai Hidup" <?= ($daftar['statuskeluarga'] == "Cerai Hidup") ? "selected" : "" ?>>Cerai Hidup</option>
+                                    <option value="Cerai Mati" <?= ($daftar['statuskeluarga'] == "Cerai Mati") ? "selected" : "" ?>>Cerai Mati</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tambahKeluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Keluarga</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/DaftarPeg/saveKeluarga" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="nama_kel" class="form-label">Nama Keluarga</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="text" class="form-control" id="nama_kel" name="nama_kel" required autofocus>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="tgllahir_kel" class="form-label">Tanggal Lahir Keluarga</label>
+                                <input type="date" id="tgllahir_kel" class="form-control" id="tgllahir_kel" name="tgllahir_kel" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="status_kel" class="form-label">Status Keluarga</label>
+                                <select id="status_kel" class="form-control" name="status_kel" required>
+                                    <option selected></option>
+                                    <option value="Istri">Istri</option>
+                                    <option value="Suami">Suami</option>
+                                    <option value="Anak">Anak</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="keterangan" class="form-label">Keterangan</label>
+                                <input type="text" id="keterangan" class="form-control" id="keterangan" name="keterangan" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="tertanggung" class="form-label">Status Tertanggung</label>
+                                <select id="tertanggung" name="tertanggung" class="form-control" required>
+                                    <option selected></option>
+                                    <option value="Tertanggung">Tertanggung</option>
+                                    <option value="Tidak Tertanggung">Tidak Tertanggung</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tambahPendidikanNonFormal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Pendidikan Non Formal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/DaftarPeg/savePendidikanNonFormal" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="nama_pend_non" class="form-label">Nama Pendidikan Non Formal</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="text" class="form-control" id="nama_pend_non" name="nama_pend_non" required autofocus>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="thn_lulus_non" class="form-label">Tahun Lulus</label>
+                                <input type="number" maxlength="4" id="thn_lulus_non" class="form-control" id="thn_lulus_non" name="thn_lulus_non" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tambahPendidikan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Pendidikan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/DaftarPeg/savePendidikan" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="id_pend" class="form-label">Pendidikan</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <select id="id_pend" name="id_pend" class="form-control" required>
+                                    <option selected></option>
+                                    <?php foreach ($pendidikan_dd as $key) { ?>
+                                        <option value="<?= $key['id_pend'] ?>"><?= $key['nama_pendidikan'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="thn_lulus" class="form-label">Tahun Lulus</label>
+                                <input type="text" class="form-control" id="thn_lulus" name="thn_lulus" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tambahPangkat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Pangkat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/DaftarPeg/savePangkat" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="id_pangkat" class="form-label">Pangkat</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <select id="id_pangkat" name="id_pangkat" class="form-control" required>
+                                    <option selected></option>
+                                    <?php foreach ($pangkat_dd as $key) { ?>
+                                        <option value="<?= $key['id_pangkat'] ?>"><?= $key['nama_pangkat'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="thn_perolehan" class="form-label">Tahun Perolehan</label>
+                                <input type="text" class="form-control" id="thn_perolehan" name="thn_perolehan" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tambahJabatan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Jabatan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/DaftarPeg/saveJabatan" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="id_jabatan" class="form-label">Jabatan</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <select id="id_jabatan" name="id_jabatan" class="form-control" required>
+                                    <option selected></option>
+                                    <?php foreach ($jabatan_dd as $key) { ?>
+                                        <option value="<?= $key['id_jabatan'] ?>"><?= $key['nama_jabatan'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="periode_mulai" class="form-label">Periode Mulai</label>
+                                <input type="text" class="form-control" id="periode_mulai" name="periode_mulai" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="periode_selesai" class="form-label">Periode Selesai</label>
+                                <input type="text" class="form-control" id="periode_selesai" name="periode_selesai" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="unit_kerja" class="form-label">Unit Kerja</label>
+                                <input type="text" class="form-control" id="unit_kerja" name="unit_kerja" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editPendidikan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Pendidikan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/daftarPeg/updatePendidikan" method="POST">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <?= csrf_field(); ?>
+                            <div class="col-md-12">
+                                <label for="id_pend" class="form-label">Pendidikan</label>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <select id="id_pend" name="id_pend" class="form-control" required>
+                                    <option selected></option>
+                                    <option value="SD" <?= ($p['nama_pendidikan'] == "SD") ? "selected" : "" ?>>SD</option>
+                                    <option value="SMP" <?= ($p['nama_pendidikan'] == "SMP") ? "selected" : "" ?>>SMP</option>
+                                    <option value="SLTA" <?= ($p['nama_pendidikan'] == "SLTA") ? "selected" : "" ?>>SLTA</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="thn_lulus" class="form-label">Tahun Lulus</label>
+                                <input type="text" class="form-control" id="thn_lulus" name="thn_lulus" value=" <?= $p['thn_lulus'] ?>" required>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<?php if (count($user_linked) > 0) : ?>
+    <div class="modal fade" id="editUsernamePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Username dan Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/DaftarPeg/saveUserPrimary" method="POST">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <?= csrf_field(); ?>
+                                <div class="col-md-12">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                    <input type="hidden" class="form-control" id="id" name="id" value="<?= $user_linked[0]['id'] ?>" required>
+                                    <input type="text" class="form-control" id="username" name="username" value="<?= $user_linked[0]['username'] ?>" required>
+                                </div>
+                                <!-- <div class="col-md-12">
+                                    <label for="password" class="form-label">Password</label><br>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                    <label style="color: red;"><small>*Biarkan kosong jika tidak ingin merubah password</small></label>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+
+<!-- Modal For Delete  -->
+
+<!-- Pendidikan Non Formal  -->
+<div class="modal fade" id="Modaldelnonformal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pendidikan Non Formal?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary" href="/DaftarPeg/deletePendidikanNonFormal/<?= $n['id_nonformal']; ?>/<?= $daftar['id_identitas']; ?>">Hapus</a>
+                </div>
+            </div>
+        </div>
+    </div>
 <?= $this->endSection(); ?>

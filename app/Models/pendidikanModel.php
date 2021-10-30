@@ -9,6 +9,8 @@ use CodeIgniter\Model;
 class pendidikanModel extends Model
 {
     protected $table = 'ambil_pendidikan';
+    protected $primaryKey = 'id_ambil_pend';
+    protected $allowedFields = ['id_identitas', 'id_pend', 'thn_lulus'];
     protected $id = 'id_identitas';
 
     public function getPendidikan($id)
@@ -19,6 +21,16 @@ class pendidikanModel extends Model
             ->where('identitaspeg.id_identitas', $id)
             ->orderBy('ambil_pendidikan.id_ambil_pend')
             ->get()->getResultArray();
+    }
+
+    public function getPendidikanDropdown()
+    {
+        return $this->db->table('pendidikan')->get()->getResultArray();
+    }
+
+    public function getPendidikanExist($where)
+    {
+        return $this->db->table($this->table)->where($where)->get()->getResultArray();
     }
 
     public function getDashboardpend()

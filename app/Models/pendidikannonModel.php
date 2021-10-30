@@ -6,6 +6,10 @@ use CodeIgniter\Model;
 
 class pendidikannonModel extends Model
 {
+    protected $table = 'pendidikan_nonformal';
+    protected $primaryKey = 'id_nonformal';
+    protected $allowedFields = ['id_identitas', 'nama_pend_non', 'thn_lulus_non'];
+
     public function getnonFormal($id)
     {
         return $this->db->table('pendidikan_nonformal')

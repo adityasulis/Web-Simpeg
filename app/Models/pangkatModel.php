@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 class pangkatModel extends Model
 {
     protected $table = 'ambil_pangkat';
+    protected $primaryKey = 'id_ambil_pangkat';
+    protected $allowedFields = ['id_identitas', 'id_pangkat', 'thn_perolehan'];
     protected $id = 'id_identitas';
 
     public function getPangkat($id)
@@ -16,6 +18,16 @@ class pangkatModel extends Model
             ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_pangkat.id_identitas')
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getResultArray();
+    }
+
+    public function getPangkatDropdown()
+    {
+        return $this->db->table('pangkat')->get()->getResultArray();
+    }
+
+    public function getPangkatExist($where)
+    {
+        return $this->db->table($this->table)->where($where)->get()->getResultArray();
     }
 
     public function getDashboardpang()
