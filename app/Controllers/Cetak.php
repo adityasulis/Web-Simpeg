@@ -106,6 +106,10 @@ class Cetak extends BaseController
                     <td>' . $daftar->nik . '</td>
                 </tr>
                 <tr>
+                    <th style="text-align:left;">TMT</th>
+                    <td>' . $daftar->tmt . '</td>
+                </tr>
+                <tr>
                     <th style="text-align:left;">Jabatan</th>
                     <td>' . $daftar->jabatan_peg . '</td>
                 </tr>

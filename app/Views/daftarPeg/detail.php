@@ -1,7 +1,3 @@
-<?php
-
-use App\Controllers\Cetak;
-?>
 <?= $this->extend('templates/index'); ?>
 <?= $this->section('page-content-users'); ?>
 <style>
@@ -58,6 +54,18 @@ use App\Controllers\Cetak;
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <a href="#" class="btn-sm btn-success" style="text-decoration: none;">
+                    <i class="fas fa-check-square"></i>
+                    Status Pegawai Aktif
+                </a>
+                <a href="#" class="btn-sm btn-danger" style="text-decoration: none;">
+                    <i class="fas fa-times-circle"></i>
+                    Status Pegawai Non Aktif
+                </a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col md-4 mt-3">
                 <!-- tabel PROFILE pegawai dimulai -->
                 <div class="card shadow mb-4">
@@ -111,8 +119,8 @@ use App\Controllers\Cetak;
                                     Ubah Username dan Password
                                 </button>
                             <?php endif; ?>
-                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#editData" style="float: right;">
-                            Edit
+                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#editData" style="float: right;" data-placement="Bottom" title="Edit Data">
+                                Edit
                             </button>
                         </div>
                     </div>
@@ -125,10 +133,10 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Data Keluarga</h6>
                     </div>
                     <div class="card-body">
-                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahKeluarga" style="float: right;margin-bottom: 10px;">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahKeluarga" style="float: right;margin-bottom: 10px;" data-placement="Bottom" title="Tambah Data">
                             Tambah
                         </button>
-                <div class="table-responsive">
+                        <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -145,11 +153,10 @@ use App\Controllers\Cetak;
                                             <td><?= $k['tgllahir_kel']; ?></td>
                                             <td><?= $k['status_kel']; ?></td>
                                             <td>
-                                                <a href="/DaftarPeg/deleteKeluarga/<?= $k['id_data_kel']; ?>/<?= $daftar['id_identitas']; ?>" class="btn-sm btn-outline-danger">
+                                                <a href="#" data-toggle="modal" data-target="#Modaldelkeluarga" class="btn-sm btn-outline-danger">
                                                     <i class="fas fa-trash-alt"></i></a>
-
                                                 <a href="" class="btn-sm btn-outline-info">
-                                                <i class="fas fa-edit"></i>
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -166,7 +173,7 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Pendidikan Non Formal</h6>
                     </div>
                     <div class="card-body">
-                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPendidikanNonFormal" style="float: right;margin-bottom: 10px;">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPendidikanNonFormal" style="float: right;margin-bottom: 10px;" data-placement="Bottom" title="Tambah Data">
                             Tambah
                         </button>
                         <div class="table-responsive">
@@ -187,8 +194,10 @@ use App\Controllers\Cetak;
                                             <td><?= $n['nama_pend_non']; ?></td>
                                             <td><?= $n['thn_lulus_non']; ?></td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#Modaldelnonformal" class="btn-sm  btn-outline-danger"> 
-                                                <i class="fas fa-trash-alt"> </i></a>
+                                                <a href="#" data-toggle="modal" data-target="#Modaldelnonformal" class="btn-sm  btn-outline-danger">
+                                                    <i class="fas fa-trash-alt"> </i></a>
+                                                <a href="#" data-toggle="modal" data-target="#Modaldelnonformal" class="btn-sm  btn-outline-info">
+                                                    <i class="fas fa-edit"> </i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -210,7 +219,7 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Pendidikan</h6>
                     </div>
                     <div class="card-body">
-                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPendidikan" style="float: right;margin-bottom: 10px;">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPendidikan" style="float: right;margin-bottom: 10px;" data-placement="Bottom" title="Tambah Data">
                             Tambah
                         </button>
                         <div class="table-responsive">
@@ -231,10 +240,9 @@ use App\Controllers\Cetak;
                                             <td style="text-align: left;"><?= $p['nama_pendidikan']; ?></td>
                                             <td><?= $p['thn_lulus']; ?></td>
                                             <td>
-                                                <a href="/DaftarPeg/deletePendidikan/<?= $p['id_ambil_pend']; ?>/<?= $daftar['id_identitas']; ?>" class="btn btn-danger">Hapus</a>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPendidikan" style="float: right;">
-                                                    Edit
-                                                </button>
+                                                <a href="#" data-toggle="modal" data-target="#editPendidikan" class="btn-sm btn-outline-info">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -251,7 +259,7 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Kepangkatan</h6>
                     </div>
                     <div class="card-body">
-                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPangkat" style="float: right;margin-bottom: 10px;">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahPangkat" style="float: right;margin-bottom: 10px;" data-placement="Bottom" title="Tambah Data">
                             Tambah
                         </button>
                         <div class="table-responsive">
@@ -273,7 +281,9 @@ use App\Controllers\Cetak;
                                             <td><?= $g['nama_pangkat']; ?></td>
                                             <td><?= $g['thn_perolehan']; ?></td>
                                             <td>
-                                                <a href="/DaftarPeg/deletePangkat/<?= $g['id_ambil_pangkat']; ?>/<?= $daftar['id_identitas']; ?>" class="btn btn-danger">Hapus</a>
+                                                <a href="/DaftarPeg/deletePangkat/<?= $g['id_ambil_pangkat']; ?>/<?= $daftar['id_identitas']; ?>" class="btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash-alt"> </i>
+                                                </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -290,7 +300,7 @@ use App\Controllers\Cetak;
                         <h6 class="m-0 font-weight-bold text-primary">Riwayat Jabatan</h6>
                     </div>
                     <div class="card-body">
-                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahJabatan" style="float: right;margin-bottom: 10px;">
+                        <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#tambahJabatan" style="float: right;margin-bottom: 10px;" data-placement="Bottom" title="Tambah Data">
                             Tambah
                         </button>
                         <div class="table-responsive">
@@ -314,7 +324,9 @@ use App\Controllers\Cetak;
                                             <td><?= $j['periode_selesai']; ?></td>
                                             <td><?= $j['unit_kerja']; ?></td>
                                             <td>
-                                                <a href="/DaftarPeg/deleteJabatan/<?= $j['id_ambil_jabatan']; ?>/<?= $daftar['id_identitas']; ?>" class="btn btn-danger">Hapus</a>
+                                                <a href="/DaftarPeg/deleteJabatan/<?= $j['id_ambil_jabatan']; ?>/<?= $daftar['id_identitas']; ?>" class="btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -696,8 +708,8 @@ use App\Controllers\Cetak;
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -707,23 +719,43 @@ use App\Controllers\Cetak;
 
 
 <!-- Modal For Delete  -->
-
-<!-- Pendidikan Non Formal  -->
-<div class="modal fade" id="Modaldelnonformal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pendidikan Non Formal?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                    <a class="btn btn-primary" href="/DaftarPeg/deletePendidikanNonFormal/<?= $n['id_nonformal']; ?>/<?= $daftar['id_identitas']; ?>">Hapus</a>
-                </div>
+<!-- Data Keluarga -->
+<div class="modal fade" id="Modaldelkeluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Keluarga?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <a class="btn btn-danger" href="/DaftarPeg/deleteKeluarga/<?= $k['id_data_kel']; ?>/<?= $daftar['id_identitas']; ?>">Hapus</a>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Pendidikan Non Formal  -->
+<div class="modal fade" id="Modaldelnonformal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pendidikan Non Formal?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <a class="btn btn-danger" href="/DaftarPeg/deletePendidikanNonFormal/<?= $n['id_nonformal']; ?>/<?= $daftar['id_identitas']; ?>">Hapus</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <?= $this->endSection(); ?>
