@@ -80,7 +80,7 @@ class Cetak extends BaseController
             .tabel-konten{
                 margin-top:10px;
                 text-align:left; 
-                margin-left:35px;
+                margin-left:auto;
                 margin-right:auto;
                 border: 1px solid black;
                 border-collapse: collapse;
@@ -94,7 +94,7 @@ class Cetak extends BaseController
         <h2>DATA PEGAWAI PT BPR BKK WONOGIRI (Perseroda)</h2>
 
         <div class="index">PROFIL PEGAWAI</div>
-        <table style="margin-top:10px; text-align:left; margin-left:35px;margin-right:auto;">
+        <table style="margin-top:10px; text-align:left; margin-left:auto;margin-right:auto;">
         <tbody>';
 
         $html .= '   <tr>

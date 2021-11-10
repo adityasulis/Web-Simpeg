@@ -25,10 +25,17 @@ class daftarModel extends Model
         return $this->table('identitaspeg')->like('namapeg', $keyword)->orLike('jabatan_peg', $keyword);
     }
 
+    public function getDetail($id)
+    {
+        return $this->db->table('identitaspeg')
+            ->select('identitaspeg.id_identitas, nik, DATE_FORMAT(tmt,"%d-%m-%Y") as tmt, namapeg, jabatan_peg, tmplahir, DATE_FORMAT(tgllahir,"%d-%m-%Y") as tgllahir, alamat, Statuspeg, statuskeluarga, Aktif')
+            ->where('id_identitas', $id)
+            ->get()->getResultArray();
+    }
     public function getDashboarddata()
     {
         return $this->db->table('identitaspeg')
-            ->select('identitaspeg.id_identitas, nik,tmt, namapeg, jabatan_peg, tmplahir,tgllahir,alamat,Statuspeg,statuskeluarga')
+            ->select('identitaspeg.id_identitas, nik, DATE_FORMAT(tmt,"%d-%m-%Y") as tmt, namapeg, jabatan_peg, tmplahir, DATE_FORMAT(tgllahir,"%d-%m-%Y") as tgllahir, alamat, Statuspeg, statuskeluarga')
             ->join('ambil_users', 'identitaspeg.id_identitas=ambil_users.id_identitas')
             ->join('users', 'users.id = ambil_users.id')
             ->where('users.id', user()->id)
@@ -38,7 +45,7 @@ class daftarModel extends Model
     public function getCetakData($id)
     {
         return $this->db->table('identitaspeg')
-            ->select('id_identitas, nik, tmt, namapeg, jabatan_peg, tmplahir,tgllahir,alamat,Statuspeg,statuskeluarga')
+            ->select('id_identitas, nik, DATE_FORMAT(tmt,"%d-%m-%Y") as tmt, namapeg, jabatan_peg, tmplahir,DATE_FORMAT(tgllahir,"%d-%m-%Y") as tgllahir,alamat,Statuspeg,statuskeluarga')
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getRow();
     }
@@ -46,6 +53,7 @@ class daftarModel extends Model
     public function getDaftarExcel()
     {
         return $this->db->table('identitaspeg')
+            ->select('id_identitas, nik, DATE_FORMAT(tmt,"%d-%m-%Y") as tmt, namapeg, jabatan_peg, tmplahir,DATE_FORMAT(tgllahir,"%d-%m-%Y") as tgllahir,alamat,Statuspeg,statuskeluarga')
             ->orderBy('namapeg')
             ->get()->getResult();
     }

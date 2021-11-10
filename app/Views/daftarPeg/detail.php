@@ -13,24 +13,36 @@
 </style>
 <div class="content-detail">
     <div class="container">
+
         <div class="d-flex justify-content-between">
             <h4 class="justify-content-start" style="margin-top: 7px; margin-bottom:20px;">DETAIL PEGAWAI PT BPR BKK WONOGIRI (Perseroda)</h4>
             <li class="justify-content-end" style="list-style: none;">
-                <form action="/Cetak/cetakDataUser/<?= $daftar['id_identitas']; ?>" method="POST" class="d-inline" target="_blank">
+                <form action="/Cetak/cetakDataUser/<?= $daftar['0']['id_identitas']; ?>" method="POST" class="d-inline" target="_blank">
                     <?= csrf_field(); ?>
                     <input type="hidden" name="_method" value="cetakadmin">
-                    <button type="submit" class="btn btn-outline-primary">
+                    <button type="submit" class="btn btn-outline-primary" data-placement="Bottom" title="Cetak Data Pegawai">
                         <i class="fas fa-fw fa-print"></i></button>
                 </form>
-                <form action="/daftarPeg/<?= $daftar['id_identitas']; ?>" method="POST" class="d-inline">
+                <form action="/daftarPeg/<?= $daftar['0']['id_identitas']; ?>" method="POST" class="d-inline">
                     <?= csrf_field(); ?>
-                    <input type="hidden" name="_method" value="delete">
+                    <!-- <input type="hidden" name="_method" value="delete">
                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah Anda Yakin?');">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button> -->
+                    <?php if ($daftar['0']['Aktif'] > "0") : ?>
+                        <a id="status" type="button-disable" class="btn btn-outline-danger" style="text-decoration: none;" data-placement="Bottom" title="Non Aktifkan Pegawai">
+                            <i class="fas fa-times-circle"></i>
+                        </a>
+                    <?php else : ?>
+                        <a id="status" type="button-disable" class="btn btn-outline-success" style="text-decoration: none;" data-placement="Bottom" title="Aktifkan Pegawai">
+                            <i class="fas fa-check-square"></i>
+                        </a>
+                    <?php endif ?>
+
                 </form>
+
                 <a href="<?= base_url('DaftarPeg/index'); ?>" class="btn btn-outline-info ">
-                    <i class="fas fa-fw fa-angle-double-left"></i>
+                    <i class="fas fa-fw fa-angle-double-left" data-placement="Bottom" title="Kembali ke Daftar Pegawai"></i>
                 </a>
             </li>
         </div>
@@ -55,14 +67,17 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a href="#" class="btn-sm btn-success" style="text-decoration: none;">
-                    <i class="fas fa-check-square"></i>
-                    Status Pegawai Aktif
-                </a>
-                <a href="#" class="btn-sm btn-danger" style="text-decoration: none;">
-                    <i class="fas fa-times-circle"></i>
-                    Status Pegawai Non Aktif
-                </a>
+                <?php if ($daftar['0']['Aktif'] > "0") : ?>
+                    <a id="status" type="button-disable" class="btn-sm btn-success" style="text-decoration: none;">
+                        <i class="fas fa-check-square"></i>
+                        Status Pegawai Aktif
+                    </a>
+                <?php else : ?>
+                    <a id="status" type="button-disable" class="btn-sm btn-danger" style="text-decoration: none;">
+                        <i class="fas fa-times-circle"></i>
+                        Status Pegawai Non Aktif
+                    </a>
+                <?php endif ?>
             </div>
         </div>
         <div class="row">
@@ -78,39 +93,39 @@
                                 <tbody class="body_detail_profile">
                                     <tr>
                                         <th>Nama</th>
-                                        <td><?= $daftar['namapeg']; ?></td>
+                                        <td><?= $daftar['0']['namapeg']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>NIK</th>
-                                        <td><?= $daftar['nik']; ?></td>
+                                        <td><?= $daftar['0']['nik']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>TMT</th>
-                                        <td><?= $daftar['tmt']; ?></td>
+                                        <td><?= $daftar['0']['tmt']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Jabatan</th>
-                                        <td><?= $daftar['jabatan_peg']; ?></td>
+                                        <td><?= $daftar['0']['jabatan_peg']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Tempat Lahir</th>
-                                        <td><?= $daftar['tmplahir']; ?></td>
+                                        <td><?= $daftar['0']['tmplahir']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Tanggal Lahir</th>
-                                        <td><?= $daftar['tgllahir']; ?></td>
+                                        <td><?= $daftar['0']['tgllahir']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Alamat</th>
-                                        <td><?= $daftar['alamat']; ?></td>
+                                        <td><?= $daftar['0']['alamat']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Status Pegawai</th>
-                                        <td><?= $daftar['Statuspeg']; ?></td>
+                                        <td><?= $daftar['0']['Statuspeg']; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Status Menikah</th>
-                                        <td><?= $daftar['statuskeluarga']; ?></td>
+                                        <td><?= $daftar['0']['statuskeluarga']; ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -149,9 +164,9 @@
                                 <tbody>
                                     <?php foreach ($keluarga as $k) : ?>
                                         <tr style="text-align: center;">
-                                            <td><?= $k['nama_kel']; ?></td>
-                                            <td><?= $k['tgllahir_kel']; ?></td>
-                                            <td><?= $k['status_kel']; ?></td>
+                                            <td><?= $k->nama_kel; ?></td>
+                                            <td><?= $k->tgllahir_kel; ?></td>
+                                            <td><?= $k->status_kel; ?></td>
                                             <td>
                                                 <a href="#" data-toggle="modal" data-target="#Modaldelkeluarga" class="btn-sm btn-outline-danger">
                                                     <i class="fas fa-trash-alt"></i></a>
@@ -159,6 +174,26 @@
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             </td>
+                                            <!-- modal delete -->
+                                            <div class="modal fade" id="Modaldelkeluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Data Keluarga?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+                                                        <div class="modal-footer">
+
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                            <a class="btn btn-danger" href="/DaftarPeg/deleteKeluarga/<?= $k->id_data_kel; ?>/<?= $daftar['0']['id_identitas']; ?>">Hapus</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- modal delete end -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -196,10 +231,29 @@
                                             <td>
                                                 <a href="#" data-toggle="modal" data-target="#Modaldelnonformal" class="btn-sm  btn-outline-danger">
                                                     <i class="fas fa-trash-alt"> </i></a>
-                                                <a href="#" data-toggle="modal" data-target="#Modaldelnonformal" class="btn-sm  btn-outline-info">
+                                                <a href="#" data-toggle="modal" data-target="#" class="btn-sm  btn-outline-info">
                                                     <i class="fas fa-edit"> </i></a>
                                             </td>
                                         </tr>
+                                        <!-- Delete Modal Pendidikan Non Formal  -->
+                                        <div class="modal fade" id="Modaldelnonformal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pendidikan Non Formal?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                        <a class="btn btn-danger" href="/DaftarPeg/deletePendidikanNonFormal/<?= $n['id_nonformal']; ?>/<?= $daftar['0']['id_identitas']; ?>">Hapus</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end of modal delete pendidikan non formal -->
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -281,11 +335,30 @@
                                             <td><?= $g['nama_pangkat']; ?></td>
                                             <td><?= $g['thn_perolehan']; ?></td>
                                             <td>
-                                                <a href="/DaftarPeg/deletePangkat/<?= $g['id_ambil_pangkat']; ?>/<?= $daftar['id_identitas']; ?>" class="btn-sm btn-outline-danger">
+                                                <a href="#" data-toggle="modal" data-target="#Modaldelpangkat" class="btn-sm  btn-outline-danger">
                                                     <i class="fas fa-trash-alt"> </i>
                                                 </a>
                                             </td>
                                         </tr>
+                                        <!-- Modal Delete Pangkat -->
+                                        <div class="modal fade" id="Modaldelpangkat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pangkat?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                        <a class="btn btn-danger" href="/DaftarPeg/deletePangkat/<?= $g['id_ambil_pangkat']; ?>/<?= $daftar['0']['id_identitas']; ?>">Hapus</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal Delete Pangkat -->
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -324,11 +397,31 @@
                                             <td><?= $j['periode_selesai']; ?></td>
                                             <td><?= $j['unit_kerja']; ?></td>
                                             <td>
-                                                <a href="/DaftarPeg/deleteJabatan/<?= $j['id_ambil_jabatan']; ?>/<?= $daftar['id_identitas']; ?>" class="btn-sm btn-outline-danger">
+                                                <a href="#" data-toggle="modal" data-target="#Modaldeljabatan" class="btn-sm btn-outline-danger">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </td>
                                         </tr>
+
+                                        <!-- Modal Delete Data Jabatan -->
+                                        <div class="modal fade" id="Modaldeljabatan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data Jabatan?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                        <a class="btn btn-danger" href="/DaftarPeg/deleteJabatan/<?= $j['id_ambil_jabatan']; ?>/<?= $daftar['0']['id_identitas']; ?>">Hapus</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End of delete data jabatan -->
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -362,54 +455,59 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="username" class="form-label">Nama Pegawai</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
-                                <input type="text" class="form-control" id="namapeg" name="namapeg" value="<?= $daftar['namapeg'] ?>" required autofocus>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
+                                <input type="text" class="form-control" id="namapeg" name="namapeg" value="<?= $daftar['0']['namapeg'] ?>" required autofocus>
                             </div>
                             <div class="col-md-12">
                                 <label for="nik" class="form-label">NIK</label>
-                                <input type="hidden" class="form-control" id="nik_asli" name="nik_asli" value="<?= $daftar['nik'] ?>" required>
-                                <input type="number" class="form-control" id="nik" name="nik" value="<?= $daftar['nik'] ?>" required>
+                                <input type="hidden" class="form-control" id="nik_asli" name="nik_asli" value="<?= $daftar['0']['nik'] ?>" required>
+                                <input type="number" class="form-control" id="nik" name="nik" value="<?= $daftar['0']['nik'] ?>" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="tmt" class="form-label">TMT</label>
+                                <input type="hidden" class="form-control" id="tmt" name="tmt" value="<?= $daftar['0']['tmt'] ?>" required>
+                                <input type="date" class="form-control" id="tmt" name="tmt" value="<?= $daftar['0']['tmt'] ?>" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $daftar['alamat'] ?>" required>
+                                <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $daftar['0']['alamat'] ?>" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="jabatan_peg" class="form-label">Jabatan</label>
-                                <input type="text" class="form-control" id="jabatan_peg" name="jabatan_peg" value="<?= $daftar['jabatan_peg'] ?>" required>
+                                <input type="text" class="form-control" id="jabatan_peg" name="jabatan_peg" value="<?= $daftar['0']['jabatan_peg'] ?>" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="tmplahir" class="form-label">Tempat Lahir</label>
-                                <input type="text" class="form-control" style="text-transform: uppercase;" id="tmplahir" value="<?= $daftar['tmplahir'] ?>" name="tmplahir" required></input>
+                                <input type="text" class="form-control" style="text-transform: uppercase;" id="tmplahir" value="<?= $daftar['0']['tmplahir'] ?>" name="tmplahir" required></input>
                             </div>
                             <div class="col-md-12">
                                 <label for="tgllahir" class="form-label">Tanggal Lahir</label>
-                                <input type="date" id="tgllahir" class="form-control" id="tgllahir" name="tgllahir" value="<?= $daftar['tgllahir'] ?>" required></ipnut>
+                                <input type="date" id="tgllahir" class="form-control" id="tgllahir" name="tgllahir" value="<?= $daftar['0']['tgllahir'] ?>" required></input>
                             </div>
                             <div class="col-md-12">
                                 <label for="Statuspeg" class="form-label">Status Pegawai </label>
                                 <select id="Statuspeg" class="form-control" name="Statuspeg" required>
                                     <option selected></option>
-                                    <option value="Pegawai Tetap" <?= ($daftar['Statuspeg'] == "Pegawai Tetap") ? "selected" : "" ?>>Pegawai Tetap</option>
-                                    <option value="Calon Pegawai" <?= ($daftar['Statuspeg'] == "Calon Pegawai") ? "selected" : "" ?>>Calon Pegawai</option>
+                                    <option value="Pegawai Tetap" <?= ($daftar['0']['Statuspeg'] == "Pegawai Tetap") ? "selected" : "" ?>>Pegawai Tetap</option>
+                                    <option value="Calon Pegawai" <?= ($daftar['0']['Statuspeg'] == "Calon Pegawai") ? "selected" : "" ?>>Calon Pegawai</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label for="statuskeluarga" class="form-label">Status Menikah </label>
                                 <select id="statuskeluarga" name="statuskeluarga" class="form-control" required>
                                     <option selected></option>
-                                    <option value="Menikah" <?= ($daftar['statuskeluarga'] == "Menikah") ? "selected" : "" ?>>Menikah</option>
-                                    <option value="Belum Menikah" <?= ($daftar['statuskeluarga'] == "Belum Menikah") ? "selected" : "" ?>>Belum Menikah</option>
-                                    <option value="Cerai Hidup" <?= ($daftar['statuskeluarga'] == "Cerai Hidup") ? "selected" : "" ?>>Cerai Hidup</option>
-                                    <option value="Cerai Mati" <?= ($daftar['statuskeluarga'] == "Cerai Mati") ? "selected" : "" ?>>Cerai Mati</option>
+                                    <option value="Menikah" <?= ($daftar['0']['statuskeluarga'] == "Menikah") ? "selected" : "" ?>>Menikah</option>
+                                    <option value="Belum Menikah" <?= ($daftar['0']['statuskeluarga'] == "Belum Menikah") ? "selected" : "" ?>>Belum Menikah</option>
+                                    <option value="Cerai Hidup" <?= ($daftar['0']['statuskeluarga'] == "Cerai Hidup") ? "selected" : "" ?>>Cerai Hidup</option>
+                                    <option value="Cerai Mati" <?= ($daftar['0']['statuskeluarga'] == "Cerai Mati") ? "selected" : "" ?>>Cerai Mati</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -432,7 +530,7 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="nama_kel" class="form-label">Nama Keluarga</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                 <input type="text" class="form-control" id="nama_kel" name="nama_kel" required autofocus>
                             </div>
                             <div class="col-md-12">
@@ -449,8 +547,12 @@
                                 </select>
                             </div>
                             <div class="col-md-12">
-                                <label for="keterangan" class="form-label">Keterangan</label>
-                                <input type="text" id="keterangan" class="form-control" id="keterangan" name="keterangan" required>
+                                <label for="tertanggung" class="form-label">Keterangan</label>
+                                <select id="keterangan" name="keterangan" class="form-control" required>
+                                    <option selected></option>
+                                    <option value="Pasangan">Pasangan</option>
+                                    <option value="Anak">Anak</option>
+                                </select>
                             </div>
                             <div class="col-md-12">
                                 <label for="tertanggung" class="form-label">Status Tertanggung</label>
@@ -464,8 +566,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -488,7 +590,7 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="nama_pend_non" class="form-label">Nama Pendidikan Non Formal</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                 <input type="text" class="form-control" id="nama_pend_non" name="nama_pend_non" required autofocus>
                             </div>
                             <div class="col-md-12">
@@ -499,8 +601,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -523,7 +625,7 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="id_pend" class="form-label">Pendidikan</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                 <select id="id_pend" name="id_pend" class="form-control" required>
                                     <option selected></option>
                                     <?php foreach ($pendidikan_dd as $key) { ?>
@@ -539,8 +641,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -563,7 +665,7 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="id_pangkat" class="form-label">Pangkat</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                 <select id="id_pangkat" name="id_pangkat" class="form-control" required>
                                     <option selected></option>
                                     <?php foreach ($pangkat_dd as $key) { ?>
@@ -571,16 +673,18 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-md-12">
-                                <label for="thn_perolehan" class="form-label">Tahun Perolehan</label>
-                                <input type="text" class="form-control" id="thn_perolehan" name="thn_perolehan" required>
-                            </div>
+                            <?php foreach ($pangkat as $g) : ?>
+                                <div class="col-md-12">
+                                    <label for="thn_perolehan" class="form-label">Tahun Perolehan</label>
+                                    <input type="text" class="form-control" id="thn_perolehan" name="thn_perolehan" value=" <?= $g['thn_perolehan'] ?>" required>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -603,7 +707,7 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="id_jabatan" class="form-label">Jabatan</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                 <select id="id_jabatan" name="id_jabatan" class="form-control" required>
                                     <option selected></option>
                                     <?php foreach ($jabatan_dd as $key) { ?>
@@ -627,8 +731,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -651,27 +755,29 @@
                             <?= csrf_field(); ?>
                             <div class="col-md-12">
                                 <label for="id_pend" class="form-label">Pendidikan</label>
-                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                 <select id="id_pend" name="id_pend" class="form-control" required>
-                                    <option selected></option>
-                                    <option value="SD" <?= ($p['nama_pendidikan'] == "SD") ? "selected" : "" ?>>SD</option>
-                                    <option value="SMP" <?= ($p['nama_pendidikan'] == "SMP") ? "selected" : "" ?>>SMP</option>
-                                    <option value="SLTA" <?= ($p['nama_pendidikan'] == "SLTA") ? "selected" : "" ?>>SLTA</option>
+                                    <?php foreach ($pendidikan as $p) : ?>
+                                        <option selected></option>
+                                        <option value="SD" <?= ($p['nama_pendidikan'] == "SD") ? "selected" : "" ?>>SD</option>
+                                        <option value="SMP" <?= ($p['nama_pendidikan'] == "SMP") ? "selected" : "" ?>>SMP</option>
+                                        <option value="SLTA" <?= ($p['nama_pendidikan'] == "SLTA") ? "selected" : "" ?>>SLTA</option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
-
-                            <div class="col-md-12">
-                                <label for="thn_lulus" class="form-label">Tahun Lulus</label>
-                                <input type="text" class="form-control" id="thn_lulus" name="thn_lulus" value=" <?= $p['thn_lulus'] ?>" required>
-                            </div>
-
+                            <?php foreach ($pendidikan as $p) : ?>
+                                <div class="col-md-12">
+                                    <label for="thn_lulus" class="form-label">Tahun Lulus</label>
+                                    <input type="text" class="form-control" id="thn_lulus" name="thn_lulus" value=" <?= $p['thn_lulus'] ?>" required>
+                                </div>
+                            <?php endforeach; ?>
 
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -695,7 +801,7 @@
                                 <?= csrf_field(); ?>
                                 <div class="col-md-12">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['id_identitas'] ?>" required>
+                                    <input type="hidden" class="form-control" id="id_identitas" name="id_identitas" value="<?= $daftar['0']['id_identitas'] ?>" required>
                                     <input type="hidden" class="form-control" id="id" name="id" value="<?= $user_linked[0]['id'] ?>" required>
                                     <input type="text" class="form-control" id="username" name="username" value="<?= $user_linked[0]['username'] ?>" required>
                                 </div>
@@ -717,45 +823,6 @@
     </div>
 <?php endif; ?>
 
-
-<!-- Modal For Delete  -->
-<!-- Data Keluarga -->
-<div class="modal fade" id="Modaldelkeluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Keluarga?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="/DaftarPeg/deleteKeluarga/<?= $k['id_data_kel']; ?>/<?= $daftar['id_identitas']; ?>">Hapus</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Pendidikan Non Formal  -->
-<div class="modal fade" id="Modaldelnonformal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pendidikan Non Formal?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Anda tidak akan bisa mengembalikan data yang sudah dihapus. Apakah anda yakin akan menghapus data tersebut?</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="/DaftarPeg/deletePendidikanNonFormal/<?= $n['id_nonformal']; ?>/<?= $daftar['id_identitas']; ?>">Hapus</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <?= $this->endSection(); ?>

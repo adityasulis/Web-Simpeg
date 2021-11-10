@@ -25,7 +25,9 @@ class User extends BaseController
 
     {
         $data = [
-            'title' => 'PROFIL SAYA'
+            'title' => 'PROFIL SAYA',
+            // 'daftar' => $this->daftarModel->getDetail(),
+            // 'user_linked' => $this->userLinkedModel->getUserLinked()
         ];
 
         return view('users/index', $data);

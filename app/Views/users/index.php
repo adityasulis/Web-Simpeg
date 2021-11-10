@@ -35,9 +35,21 @@
                         <h3 class="text-uppercase text-center"><?= user()->fullname; ?></h3>
                     </div>
                     <div class="card-text text-center">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id expedita quos molestiae nesciunt quam laboriosam mollitia sed deleniti dolorum asperiores placeat, eligendi natus exercitationem corrupti atque culpa nulla impedit? Rerum.</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"> Username :
+                                <?= user()->username; ?>
+                            </li>
+                            <li class="list-group-item"> Role :
+                                <span class="badge badge-<?= (user()->name == 'superadmin') ? 'success' : 'warning' ?>">
+                                    <?= user()->name; ?>
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
+                <!-- Edit username dan password -->
+
             </div>
         </div>
     </div>

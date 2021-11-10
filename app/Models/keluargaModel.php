@@ -14,16 +14,17 @@ class keluargaModel extends Model
     public function getKeluarga($id)
     {
         return $this->db->table('data_keluarga')
+            ->select('id_data_kel,nama_kel, DATE_FORMAT(tgllahir_kel, "%d-%m-%Y") as tgllahir_kel, status_kel,tertanggung')
             ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
             ->where('identitaspeg.id_identitas', $id)
             ->orderBy('data_keluarga.id_data_kel')
-            ->get()->getResultArray();
+            ->get()->getResult();
     }
 
     public function getDashboardkel()
     {
         return $this->db->table('data_keluarga')
-            ->select('nama_kel, tgllahir_kel, status_kel, tertanggung')
+            ->select('nama_kel, DATE_FORMAT(tgllahir_kel, "%d-%m-%Y") as tgllahir_kel, status_kel, tertanggung')
             ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
             ->join('ambil_users', 'ambil_users.id_identitas=identitaspeg.id_identitas')
             ->join('users', 'ambil_users.id=users.id')
@@ -34,7 +35,7 @@ class keluargaModel extends Model
     public function getCetakkel($id)
     {
         return $this->db->table('data_keluarga')
-            ->select('nama_kel, tgllahir_kel, status_kel, tertanggung')
+            ->select('id_data_kel,nama_kel, DATE_FORMAT(tgllahir_kel, "%d-%m-%Y") as tgllahir_kel, status_kel,tertanggung')
             ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
             ->where('identitaspeg.id_identitas', $id)
             ->get()->getResult();
@@ -43,7 +44,7 @@ class keluargaModel extends Model
     public function getCetakPasangan($id)
     {
         return $this->db->table('data_keluarga')
-            ->select('nama_kel, tgllahir_kel, status_kel, tertanggung')
+            ->select('id_data_kel,nama_kel, DATE_FORMAT(tgllahir_kel, "%d-%m-%Y") as tgllahir_kel, status_kel,tertanggung')
             ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
             ->where('data_keluarga.keterangan', 'Pasangan')
             ->where('identitaspeg.id_identitas', $id)
@@ -54,7 +55,7 @@ class keluargaModel extends Model
     public function getCetakAnak($id)
     {
         return $this->db->table('data_keluarga')
-            ->select('nama_kel, tgllahir_kel, status_kel, tertanggung')
+            ->select('id_data_kel,nama_kel, DATE_FORMAT(tgllahir_kel, "%d-%m-%Y") as tgllahir_kel, status_kel,tertanggung')
             ->join('identitaspeg', 'identitaspeg.id_identitas=data_keluarga.id_identitas')
             ->where('data_keluarga.status_kel', 'Anak')
             ->where('identitaspeg.id_identitas', $id)

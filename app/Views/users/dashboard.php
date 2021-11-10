@@ -54,7 +54,7 @@
             <div class="card-body text-center">
                 <h6 style="text-transform: uppercase;font-family: Verdana, Geneva, Tahoma, sans-serif;"><?= user()->fullname; ?></h6>
                 <p class="card-text text-primary"><?= $identitas->nik; ?></p>
-                <p class="card-text"><?= $identitas->jabatan_peg; ?> - Kantor Pusat Manajemen</p>
+                <p class="card-text"><?= $identitas->jabatan_peg; ?>Kantor Pusat Manajemen</p>
 
                 <form action="/Cetak/cetakDataUser/<?= $identitas->id_identitas; ?>" method="POST" class="d-inline" target="_blank">
                     <?= csrf_field(); ?>
@@ -196,13 +196,14 @@
                             <table class="kel table table-bordered table-hover" id="table_keluarga">
                                 <thead>
                                     <tr>
-                                        <th colspan="4">KELUARGA</th>
+                                        <th colspan="5">KELUARGA</th>
                                     </tr>
                                     <tr class="tbhead">
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Lahir</th>
                                         <th>Status Keluarga</th>
+                                        <th>Tertanggung</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -213,6 +214,7 @@
                                             <td><?= $kel['nama_kel']; ?></td>
                                             <td><?= $kel['tgllahir_kel']; ?></td>
                                             <td><?= $kel['status_kel']; ?></td>
+                                            <td><?= $kel['tertanggung']; ?></td>
                                         </tr>
                                     <?php endforeach ?>
                                 </tbody>

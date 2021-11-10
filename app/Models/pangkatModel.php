@@ -14,6 +14,7 @@ class pangkatModel extends Model
     public function getPangkat($id)
     {
         return $this->db->table('pangkat')
+            ->select('id_ambil_pangkat,nama_pangkat, thn_perolehan')
             ->join('ambil_pangkat', 'ambil_pangkat.id_pangkat=pangkat.id_pangkat')
             ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_pangkat.id_identitas')
             ->where('identitaspeg.id_identitas', $id)
@@ -33,6 +34,7 @@ class pangkatModel extends Model
     public function getDashboardpang()
     {
         return $this->db->table('pangkat')
+            ->select('id_ambil_pangkat,nama_pangkat, thn_perolehan')
             ->join('ambil_pangkat', 'ambil_pangkat.id_pangkat=pangkat.id_pangkat')
             ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_pangkat.id_identitas')
             ->join('ambil_users', 'ambil_users.id_identitas=identitaspeg.id_identitas')
@@ -44,7 +46,7 @@ class pangkatModel extends Model
     public function getCetakPangkat($id)
     {
         return $this->db->table('pangkat')
-            ->select('nama_pangkat, thn_perolehan')
+            ->select('id_ambil_pangkat,nama_pangkat,thn_perolehan')
             ->join('ambil_pangkat', 'ambil_pangkat.id_pangkat=pangkat.id_pangkat')
             ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_pangkat.id_identitas')
             ->where('identitaspeg.id_identitas', $id)

@@ -59,7 +59,7 @@ class DaftarPeg extends BaseController
 
         $data = [
             'title' => 'DASHBOARD PEGAWAI PT BPR BKK WONOGIRI (Perseroda)',
-            'daftar' => $this->daftarModel->getDaftar($id),
+            'daftar' => $this->daftarModel->getDetail($id),
             'user_linked' => $this->userLinkedModel->getUserLinked($id),
             'pendidikan' => $this->pendidikanModel->getPendidikan($id),
             'pendidikan_dd' => $this->pendidikanModel->getPendidikanDropdown(),
@@ -137,37 +137,6 @@ class DaftarPeg extends BaseController
         return redirect()->to('/daftarPeg');
     }
 
-    public function edit($id)
-    {
-        $data = [
-            'title' => 'UBAH DATA PEGAWAI PT BPR BKK WONOGIRI (Perseroda)',
-            'validation' => \Config\Services::validation(),
-            'edit' => $this->daftarModel->getDaftar($id)
-        ];
-
-        return view('DaftarPeg/edit', $data);
-    }
-
-    public function update($id)
-    {
-
-        $this->daftarModel->save([
-            'id_identitas' => $id,
-            'namapeg' => $this->request->getVar('username'),
-            'nik' => $this->request->getVar('nik'),
-            'alamat' => $this->request->getVar('alamat'),
-            'jabatan_peg' => $this->request->getVar('jabatan'),
-            'tmplahir' => $this->request->getVar('tmplahir'),
-            'tgllahir' => $this->request->getVar('tgllahir'),
-            'Statuspeg' => $this->request->getVar('statuspegawai'),
-            'statuskeluarga' => $this->request->getVar('statusmenikah')
-        ]);
-
-        session()->setFlashdata('pesan', 'Data Berhasil diubah!!');
-
-        return redirect()->to('/daftarPeg');
-    }
-
     public function updatePegawai()
     {
         if ($this->request->getVar('nik_asli') == $this->request->getVar('nik')) {
@@ -175,6 +144,7 @@ class DaftarPeg extends BaseController
                 'id_identitas' => $this->request->getVar('id_identitas'),
                 'namapeg' => $this->request->getVar('namapeg'),
                 'nik' => $this->request->getVar('nik'),
+                'tmt' => $this->request->getVar('tmt'),
                 'alamat' => $this->request->getVar('alamat'),
                 'jabatan_peg' => $this->request->getVar('jabatan_peg'),
                 'tmplahir' => $this->request->getVar('tmplahir'),
