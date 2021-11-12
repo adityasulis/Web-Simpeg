@@ -58,7 +58,6 @@ class DaftarPeg extends BaseController
     {
 
         $data = [
-            'title' => 'DASHBOARD PEGAWAI PT BPR BKK WONOGIRI (Perseroda)',
             'daftar' => $this->daftarModel->getDetail($id),
             'user_linked' => $this->userLinkedModel->getUserLinked($id),
             'pendidikan' => $this->pendidikanModel->getPendidikan($id),

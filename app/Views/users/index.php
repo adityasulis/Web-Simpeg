@@ -22,6 +22,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+
     <div class="row">
         <!-- tes tampil baru -->
         <div class="col-lg-4 col-md-6">
@@ -36,21 +37,30 @@
                     </div>
                     <div class="card-text text-center">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"> Username :
-                                <?= user()->username; ?>
+                            <li class="list-group-item text-primary">
+                                <?= $daftar->nik; ?>
                             </li>
-                            <li class="list-group-item"> Role :
-                                <span class="badge badge-<?= (user()->name == 'superadmin') ? 'success' : 'warning' ?>">
-                                    <?= user()->name; ?>
-                                </span>
+                            <li class="list-group-item">
+                                <?= $daftar->jabatan_peg; ?>
+                            </li>
+                            <li class="list-group-item">
+                                <?= $unit->unit_kerja; ?>
                             </li>
                         </ul>
                     </div>
                 </div>
-
-                <!-- Edit username dan password -->
-
             </div>
+        </div>
+        <div class="col md-4 card" style="max-width: 18rem;height:fit-content;">
+            <div class="card-header bg-transparent border-secondary">Kostumisasi Akun</div>
+            <div class="card-body text-secondary">
+                <h5 class="card-title"><?= user()->fullname; ?></h5>
+                <p class="card-text">Username : <?= user()->username; ?></p>
+                <p class="card-text">Password : ********</p>
+
+                <button type="button" class="btn btn-sm btn-outline-secondary">Ganti Username</button>
+            </div>
+            <div class="card-footer bg-transparent border-secondary"> </div>
         </div>
     </div>
 </div>

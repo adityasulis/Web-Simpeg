@@ -42,6 +42,18 @@ class jabatanModel extends Model
             ->get()->getResultArray();
     }
 
+    public function getUnitKerja()
+    {
+        return $this->db->table('jabatan')
+            ->select('nama_jabatan, periode_mulai, periode_selesai, unit_kerja')
+            ->join('ambil_jabatan', 'ambil_jabatan.id_jabatan=jabatan.id_jabatan')
+            ->join('identitaspeg', 'identitaspeg.id_identitas=ambil_jabatan.id_identitas')
+            ->join('ambil_users', 'ambil_users.id_identitas=identitaspeg.id_identitas')
+            ->join('users', 'ambil_users.id=users.id')
+            ->where('users.id', user()->id)
+            ->get()->getLastRow();
+    }
+
     public function getCetakJabatan($id)
     {
         return $this->db->table('jabatan')

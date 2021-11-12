@@ -25,6 +25,15 @@ class daftarModel extends Model
         return $this->table('identitaspeg')->like('namapeg', $keyword)->orLike('jabatan_peg', $keyword);
     }
 
+    public function getAkun()
+    {
+        return $this->db->table('identitaspeg')
+            ->select('identitaspeg.id_identitas, nik, DATE_FORMAT(tmt,"%d-%m-%Y") as tmt, namapeg, jabatan_peg, tmplahir, DATE_FORMAT(tgllahir,"%d-%m-%Y") as tgllahir, alamat, Statuspeg, statuskeluarga')
+            ->join('ambil_users', 'identitaspeg.id_identitas=ambil_users.id_identitas')
+            ->join('users', 'users.id = ambil_users.id')
+            ->where('users.id', user()->id)
+            ->get()->getRow();
+    }
     public function getDetail($id)
     {
         return $this->db->table('identitaspeg')

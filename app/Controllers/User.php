@@ -8,6 +8,7 @@ use App\Models\keluargaModel;
 use App\Models\pangkatModel;
 use App\Models\jabatanModel;
 use App\Models\pendidikannonModel;
+use App\Models\userLinkedModel;
 
 class User extends BaseController
 
@@ -20,13 +21,15 @@ class User extends BaseController
         $this->pangkatModel = new pangkatModel();
         $this->jabatanModel = new jabatanModel();
         $this->pendidikannonModel = new pendidikannonModel();
+        $this->userLinkedModel = new userLinkedModel();
     }
-    public function index()
+    public function index($id = 0)
 
     {
         $data = [
             'title' => 'PROFIL SAYA',
-            // 'daftar' => $this->daftarModel->getDetail(),
+            'daftar' => $this->daftarModel->getAkun(),
+            'unit' => $this->jabatanModel->getUnitKerja()
             // 'user_linked' => $this->userLinkedModel->getUserLinked()
         ];
 
@@ -42,7 +45,8 @@ class User extends BaseController
             'keluarga' => $this->keluargaModel->getDashboardkel(),
             'pangkat' => $this->pangkatModel->getDashboardpang(),
             'jabatan' => $this->jabatanModel->getDashboarjab(),
-            'nonformal' => $this->pendidikannonModel->getDashboardpendnon()
+            'nonformal' => $this->pendidikannonModel->getDashboardpendnon(),
+            'unit' => $this->jabatanModel->getUnitKerja()
 
         ];
 

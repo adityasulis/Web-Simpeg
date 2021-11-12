@@ -48,13 +48,14 @@
 </style>
 <div class="container">
     <h2 style="text-align: center;margin-bottom:30px;"><?= $title; ?></h2>
+
     <div class="row align-items-start">
         <div class="card" style="width: 15rem;">
             <img src="<?= base_url('/img/fotoprofile/' . user()->user_image); ?>" class="foto-user" alt="profile">
             <div class="card-body text-center">
                 <h6 style="text-transform: uppercase;font-family: Verdana, Geneva, Tahoma, sans-serif;"><?= user()->fullname; ?></h6>
                 <p class="card-text text-primary"><?= $identitas->nik; ?></p>
-                <p class="card-text"><?= $identitas->jabatan_peg; ?>Kantor Pusat Manajemen</p>
+                <p class="card-text"><?= $identitas->jabatan_peg; ?> - <?= $unit->unit_kerja; ?> </p>
 
                 <form action="/Cetak/cetakDataUser/<?= $identitas->id_identitas; ?>" method="POST" class="d-inline" target="_blank">
                     <?= csrf_field(); ?>
