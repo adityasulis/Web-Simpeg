@@ -39,7 +39,17 @@ class daftarModel extends Model
         return $this->db->table('identitaspeg')
             ->select('identitaspeg.id_identitas, nik, DATE_FORMAT(tmt,"%d-%m-%Y") as tmt, namapeg, jabatan_peg, tmplahir, DATE_FORMAT(tgllahir,"%d-%m-%Y") as tgllahir, alamat, Statuspeg, statuskeluarga, Aktif')
             ->where('id_identitas', $id)
-            ->get()->getResultArray();
+            ->get()->getRowArray();
+    }
+
+    public function getAktif($id)
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('identitaspeg');
+        $builder->set('Aktif', '1');
+        $builder->where('id_identitas', $id);
+        $builder->update();
+        session()->setFlashdata('pesan', 'Pegawai Berhasil di Aktifkan!!');
     }
     public function getDashboarddata()
     {

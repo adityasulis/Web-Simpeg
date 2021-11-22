@@ -34,6 +34,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
+$routes->get('/daftarPeg/index', 'DaftarPeg::index', ['filter' => 'role:superadmin']);
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:superadmin']);
 $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:superadmin']);
 $routes->get('/admin/(::num)', 'Admin::detail/$1', ['filter' => 'role:superadmin']);

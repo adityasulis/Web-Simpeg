@@ -200,7 +200,7 @@ class Cetak extends BaseController
         }
         $html .= '</tbody>
                     </table>
-                    <div class="index">RIWAYAT PANGKAT PEGAWAI</div>
+                    <div class="index">RIWAYAT KEPANGKAT PEGAWAI</div>
                     <table class="tabel-konten">';
         $html .= '<tbody>
                     <tr>

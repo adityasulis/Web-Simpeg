@@ -26,7 +26,7 @@
 <footer class="sticky-footer bg-dark">
     <div class="container my-auto">
         <div class="copyright text-center my-auto text-white mt-0">
-            <p style="padding-top:15px">Copyright &copy; PT BPR BKK Wonogiri (Perseroda) <?= date('Y'); ?></p>
+            <p style="padding-top:15px">&copy; <?= date('Y'); ?> - PT BPR BKK Wonogiri (Perseroda)</p>
         </div>
     </div>
 </footer>

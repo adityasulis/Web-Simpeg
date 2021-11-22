@@ -67,13 +67,64 @@ class DaftarPeg extends BaseController
             'pangkat_dd' => $this->pangkatModel->getPangkatDropdown(),
             'jabatan' => $this->jabatanModel->getJabatan($id),
             'jabatan_dd' => $this->jabatanModel->getJabatanDropdown($id),
-            'nonformal' => $this->pendidikannonModel->getnonFormal($id)
+            'nonformal' => $this->pendidikannonModel->getnonFormal($id),
+
         ];
 
-        //bila 
-        // if (empty($data['daftar'])) {
-        //     throw new \CodeIgniter\Exceptions\PageNotFoundException('Data tidak ditemukan!!');
-        // }
+        return view('daftarPeg/detail', $data);
+    }
+
+    public function Aktif($id)
+    {
+        $data = [
+            'daftar' => $this->daftarModel->getDetail($id),
+            'user_linked' => $this->userLinkedModel->getUserLinked($id),
+            'pendidikan' => $this->pendidikanModel->getPendidikan($id),
+            'pendidikan_dd' => $this->pendidikanModel->getPendidikanDropdown(),
+            'keluarga' => $this->keluargaModel->getKeluarga($id),
+            'pangkat' => $this->pangkatModel->getPangkat($id),
+            'pangkat_dd' => $this->pangkatModel->getPangkatDropdown(),
+            'jabatan' => $this->jabatanModel->getJabatan($id),
+            'jabatan_dd' => $this->jabatanModel->getJabatanDropdown($id),
+            'nonformal' => $this->pendidikannonModel->getnonFormal($id),
+        ];
+
+        $data = [
+            $db = \Config\Database::connect(),
+            $builder = $db->table('identitaspeg'),
+            $builder->set('Aktif', '1'),
+            $builder->where('id_identitas', $id),
+            $builder->update(),
+            session()->setFlashdata('pesan', 'Pegawai Berhasil di Aktifkan!!')
+        ];
+
+        return view('daftarPeg/detail', $data);
+    }
+
+    public function NonAktif($id)
+    {
+        $data = [
+            'daftar' => $this->daftarModel->getDetail($id),
+            'user_linked' => $this->userLinkedModel->getUserLinked($id),
+            'pendidikan' => $this->pendidikanModel->getPendidikan($id),
+            'pendidikan_dd' => $this->pendidikanModel->getPendidikanDropdown(),
+            'keluarga' => $this->keluargaModel->getKeluarga($id),
+            'pangkat' => $this->pangkatModel->getPangkat($id),
+            'pangkat_dd' => $this->pangkatModel->getPangkatDropdown(),
+            'jabatan' => $this->jabatanModel->getJabatan($id),
+            'jabatan_dd' => $this->jabatanModel->getJabatanDropdown($id),
+            'nonformal' => $this->pendidikannonModel->getnonFormal($id),
+        ];
+
+        $data = [
+            $db = \Config\Database::connect(),
+            $builder = $db->table('identitaspeg'),
+            $builder->set('Aktif', '0'),
+            $builder->where('id_identitas', $id),
+            $builder->update(),
+            session()->setFlashdata('pesan', 'Pegawai Berhasil di Aktifkan!!')
+        ];
+
         return view('daftarPeg/detail', $data);
     }
 
